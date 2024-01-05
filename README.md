@@ -1,2 +1,2 @@
-# EquivariantGraphicStatics
-Derives the reciprocal diagrams from a symmetric self-stressed framework, separated by irreducible representation.
+# Equivariant Graphic Statics
+This project investigates graphic statics of a symmetric framework and its irreducible components.
