@@ -1,7 +1,7 @@
 import math
 import numpy as np
-from cell_complex import *
-from group_actions import *
+from CODE.cell_complex import *
+from CODE.group_actions import *
 
 def simple_triangle():
     print("Simple triangle sample\nDihedral symmetry order 2")

@@ -7,7 +7,7 @@ def run_tests(force_cosheaf, constant_cosheaf, position_cosheaf):
     P = position_cosheaf
     action = F.group_action
 
-    print("Check commutativity of cosheaf representation and boundary matrices\n")
+    print("Checking commutativity of cosheaf representation and boundary matrices\n")
     for generator_index in action.generator_indices():
         print("Group generator index:", generator_index)
         for dim in [1,2]:

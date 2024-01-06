@@ -1,7 +1,7 @@
 import math
 import numpy as np
 from matplotlib import pyplot as plt
-from group_actions import *
+from CODE.group_actions import *
 
 def pol2cart(rho, theta):
     x = rho * np.cos(theta)
