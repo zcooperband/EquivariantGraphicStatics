@@ -1,6 +1,41 @@
 import math
 import numpy as np
 
+
+def print_homologies(force_cosheaf, constant_cosheaf, position_cosheaf):
+    F = force_cosheaf
+    J = constant_cosheaf
+    P = position_cosheaf
+    print("Homology space dimensions:")
+    print("   Force  Constant  Position")
+    print("H_2:", F.homology_dim(2), "------", J.homology_dim(2), "------", P.homology_dim(2))
+    print("H_1:", F.homology_dim(1), "------", J.homology_dim(1), "------", P.homology_dim(1))
+    print("H_0:", F.homology_dim(0), "------", J.homology_dim(0), "------", P.homology_dim(0))
+
+
+def irreducible_pairs(force_cosheaf, constant_cosheaf, position_cosheaf):
+    Fhomology_char = [force_cosheaf.homology_irred_char(i) for i in range(0, 3)]
+    Jhomology_char = [constant_cosheaf.homology_irred_char(i) for i in range(0, 3)]
+    Phomology_char = [position_cosheaf.homology_irred_char(i) for i in range(0, 3)]
+    P_irred_basis = position_cosheaf.homology_irred_basis(2)
+    char_dims = force_cosheaf.group_action.regular_char()
+
+    for i in range(0, force_cosheaf.group_action.num_conjugacy_classes()):
+        print("Irreducible number:", i, "Dimension:", char_dims[i])
+        print("Dimensions of the irreducible cosheaf homology:")
+        print("     F --R^2-- P")
+        print("H_2:", int(Fhomology_char[2][i]), "--", int(Jhomology_char[2][i]), "--", int(Phomology_char[2][i]) )
+        print("H_1:", int(Fhomology_char[1][i]), "--", int(Jhomology_char[1][i]), "--", int(Phomology_char[1][i]) )
+        print("H_0:", int(Fhomology_char[0][i]), "--", int(Jhomology_char[0][i]), "--", int(Phomology_char[0][i]) )
+        if bool(P_irred_basis):    #If there exists a reciprocal figure
+            #Center the figure
+            non_constant_pos = position_cosheaf.remove_constant_component(P_irred_basis[i])
+            for j in range(0, non_constant_pos.shape[1]):
+                posvec = non_constant_pos[:,j]
+                position_cosheaf.plot_both(posvec)
+        print("-------------------------------------------------------------------------------------------")
+
+
 def run_tests(force_cosheaf, constant_cosheaf, position_cosheaf):
     F = force_cosheaf
     J = constant_cosheaf

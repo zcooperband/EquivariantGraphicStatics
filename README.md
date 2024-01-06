@@ -5,7 +5,7 @@ This project investigates graphic statics of a symmetric framework and its irred
 ```python
 import CODE.cosheaves
 import CODE.samples
-import CODE.tests
+import CODE.output
 ```
 
 The module *samples* contains many sample framework geometries. Calling a function in sample returns a pair **(cell_complex, action)** where **cell_complex** encodes cell combinatorics and **action** encodes the specified group action on the vertices of the **cell_complex**.
@@ -45,7 +45,7 @@ J = CODE.cosheaves.constant_cosheaf(cell_complex, action)
 F = CODE.cosheaves.force_cosheaf(cell_complex, action)
 P = CODE.cosheaves.position_cosheaf(cell_complex, action)
 
-CODE.tests.run_tests(F,J,P)
+CODE.output.run_tests(F,J,P)
 ```
 
     Checking commutativity of cosheaf representation and boundary matrices
@@ -98,12 +98,7 @@ Everything looking good! The first homology $H_1 \mathcal{F}$ encodes the self-s
 
 
 ```python
-
-print("Homology space dimensions:")
-print("   Force  Constant  Position")
-print("H_2:", F.homology_dim(2), "------", J.homology_dim(2), "------", P.homology_dim(2))
-print("H_1:", F.homology_dim(1), "------", J.homology_dim(1), "------", P.homology_dim(1))
-print("H_0:", F.homology_dim(0), "------", J.homology_dim(0), "------", P.homology_dim(0))
+CODE.output.print_homologies(F, J, P)
 
 print("\n")
 print("Basis for self-stresses")
@@ -159,33 +154,8 @@ We can distinguish the self-stress - reciprocal diagram pairs by irreducible rep
 
 
 ```python
-#Function that outputs the reciprocal pairs, grouped by irreducible
-def irreducible_pairs(force_cosheaf, constant_cosheaf, position_cosheaf):
-    Fhomology_char = [force_cosheaf.homology_irred_char(i) for i in range(0, 3)]
-    Jhomology_char = [constant_cosheaf.homology_irred_char(i) for i in range(0, 3)]
-    Phomology_char = [position_cosheaf.homology_irred_char(i) for i in range(0, 3)]
-    P_irred_basis = position_cosheaf.homology_irred_basis(2)
-    char_dims = force_cosheaf.group_action.regular_char()
-
-    for i in range(0, force_cosheaf.group_action.num_conjugacy_classes()):
-        print("Irreducible number:", i, "Dimension:", char_dims[i])
-        print("Dimensions of the irreducible cosheaf homology:")
-        print("     F --R^2-- P")
-        print("H_2:", int(Fhomology_char[2][i]), "--", int(Jhomology_char[2][i]), "--", int(Phomology_char[2][i]) )
-        print("H_1:", int(Fhomology_char[1][i]), "--", int(Jhomology_char[1][i]), "--", int(Phomology_char[1][i]) )
-        print("H_0:", int(Fhomology_char[0][i]), "--", int(Jhomology_char[0][i]), "--", int(Phomology_char[0][i]) )
-        if bool(P_irred_basis):    #If there exists a reciprocal figure
-            #Center the figure
-            non_constant_pos = position_cosheaf.remove_constant_component(P_irred_basis[i])
-            for j in range(0, non_constant_pos.shape[1]):
-                posvec = non_constant_pos[:,j]
-                position_cosheaf.plot_both(posvec)
-        print("-------------------------------------------------------------------------------------------")
-
-
-
-#Evaluate the function on our cosheaves
-irreducible_pairs(F,J,P)
+#Output the irreducible self-stress - reciprocal diagram pairs
+CODE.output.irreducible_pairs(F,J,P)
 ```
 
     Irreducible number: 0 Dimension: 1.0
@@ -245,7 +215,7 @@ F2 = CODE.cosheaves.force_cosheaf(cell_complex2, action2)
 P2 = CODE.cosheaves.position_cosheaf(cell_complex2, action2)
 
 print("\n-----------------------------------------------")
-irreducible_pairs(F2, J2, P2)
+CODE.output.irreducible_pairs(F2, J2, P2)
 
 ```
 
