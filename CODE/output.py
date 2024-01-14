@@ -1,5 +1,6 @@
 import math
 import numpy as np
+from tabulate import tabulate
 
 
 def print_homologies(force_cosheaf, constant_cosheaf, position_cosheaf):
@@ -11,6 +12,7 @@ def print_homologies(force_cosheaf, constant_cosheaf, position_cosheaf):
     print("H_2:", F.homology_dim(2), "------", J.homology_dim(2), "------", P.homology_dim(2))
     print("H_1:", F.homology_dim(1), "------", J.homology_dim(1), "------", P.homology_dim(1))
     print("H_0:", F.homology_dim(0), "------", J.homology_dim(0), "------", P.homology_dim(0))
+
 
 
 def irreducible_pairs(force_cosheaf, constant_cosheaf, position_cosheaf):
@@ -34,6 +36,30 @@ def irreducible_pairs(force_cosheaf, constant_cosheaf, position_cosheaf):
                 posvec = non_constant_pos[:,j]
                 position_cosheaf.plot_both(posvec)
         print("-------------------------------------------------------------------------------------------")
+
+
+
+def irreducible_euler_char(cosheaf):
+    homology_char = [cosheaf.homology_irred_char(i) for i in range(0, 3)]
+    chain_char = [cosheaf.chain_irred_char(i) for i in range(0, 3)]
+    char_dims = cosheaf.group_action.regular_char()
+
+    for i in range(0, cosheaf.group_action.num_conjugacy_classes()):
+        data= [None] * 5
+        for dim in range(0, 3):
+            data[dim]= ['char over C_' + str(dim) + ':', int(chain_char[dim][i]), '|',
+                            'char over H_' + str(dim) + ':', int(homology_char[dim][i]) ]
+        data[3] = ['', '--------', '', '--------']
+        data[4] = ['alternating sum:', int(chain_char[2][i] - chain_char[1][i] + chain_char[0][i]), "|", 
+                            '', int(homology_char[2][i] - homology_char[1][i] + homology_char[0][i]) ]
+
+        data_header=['Chain Characters', '# copies of irriducible', '|', 
+                        'Homology Characters', '# copies of irriducible']
+        print("Irreducible number:", i, "Dimension:", char_dims[i])
+        print()
+        print(tabulate(data, headers=data_header, numalign="left" ))
+        print('\n----------------------------------------------------------------------------------------\n')
+
 
 
 def run_tests(force_cosheaf, constant_cosheaf, position_cosheaf):
