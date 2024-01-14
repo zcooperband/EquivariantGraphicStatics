@@ -287,3 +287,62 @@ CODE.output.irreducible_pairs(F2, J2, P2)
     Degenerate picture, stress is trivial
     -------------------------------------------------------------------------------------------
     
+
+We can gain a better understanding of the homology spaces by understanding the extended euler characteristic for each cosheaf. Take the force cosheaf chain complex $C\mathcal{F}$, decomposed as a direct sum of irreducible chain complexes $C_1^{(j)} \mathcal{F} \xrightarrow{\partial} C_0^{(j)} \mathcal{F}$ for every irreducible representation $\mu^{(j)}$. Each chain complex has an *Euler characteristic equation*, relating the dimensions of $C^{(j)} \mathcal{F}$ and $H^{(j)} \mathcal{F}$ (known as *Maxwell's rule* over the force cosheaf $\mathcal{F}$). This Euler characteristic extends to a character counting rule, relating the number of copies of $\mu^{(j)}$ in the representation for $C^{(j)}\mathcal{F}$ and sub-representation for $H^{(j)} \mathcal{F}$.
+
+
+```python
+CODE.output.irreducible_euler_char(F2)
+```
+
+    Irreducible number: 0 Dimension: 1.0
+    
+    Chain Characters    # copies of irriducible    |    Homology Characters    # copies of irriducible
+    ------------------  -------------------------  ---  ---------------------  -------------------------
+    char over C_0:      9                          |    char over H_0:         0
+    char over C_1:      12                         |    char over H_1:         3
+    char over C_2:      0                          |    char over H_2:         0
+                        --------                        --------
+    alternating sum:    -3                         |                           -3
+    
+    ----------------------------------------------------------------------------------------
+    
+    Irreducible number: 1 Dimension: 1.0
+    
+    Chain Characters    # copies of irriducible    |    Homology Characters    # copies of irriducible
+    ------------------  -------------------------  ---  ---------------------  -------------------------
+    char over C_0:      9                          |    char over H_0:         2
+    char over C_1:      7                          |    char over H_1:         0
+    char over C_2:      0                          |    char over H_2:         0
+                        --------                        --------
+    alternating sum:    2                          |                           2
+    
+    ----------------------------------------------------------------------------------------
+    
+    Irreducible number: 2 Dimension: 1.0
+    
+    Chain Characters    # copies of irriducible    |    Homology Characters    # copies of irriducible
+    ------------------  -------------------------  ---  ---------------------  -------------------------
+    char over C_0:      10                         |    char over H_0:         1
+    char over C_1:      10                         |    char over H_1:         1
+    char over C_2:      0                          |    char over H_2:         0
+                        --------                        --------
+    alternating sum:    0                          |                           0
+    
+    ----------------------------------------------------------------------------------------
+    
+    Irreducible number: 3 Dimension: 1.0
+    
+    Chain Characters    # copies of irriducible    |    Homology Characters    # copies of irriducible
+    ------------------  -------------------------  ---  ---------------------  -------------------------
+    char over C_0:      10                         |    char over H_0:         1
+    char over C_1:      9                          |    char over H_1:         0
+    char over C_2:      0                          |    char over H_2:         0
+                        --------                        --------
+    alternating sum:    1                          |                           1
+    
+    ----------------------------------------------------------------------------------------
+    
+    
+
+The characters of the chain complex representation $\chi(C^{(j)}\mathcal{F})$ above count the number of force asignment chains fixed by the $\mu^{(j)}$ symmetry. For instance, take the trivial irreducible representation $\mu^{(0)}$ with complete $D_4$ symmetry. The number of 1-chains fixed by every group element of $D_4$ is equal to the number of edge orbits of the edges under the $D_4$ permutation action. We see that $\chi(C_1^{(0)} \mathcal{F})$ has twelve copies of $\chi(\mu^{(0)})$ meaning that there are twelve edge orbits. The number of edge orbits can be determined by counting the representative edges in one quadrant of the figure.
